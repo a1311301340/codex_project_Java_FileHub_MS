@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: filehub-mysql
+    environment:
+      MYSQL_DATABASE: filehub
+      MYSQL_USER: filehub
+      MYSQL_PASSWORD: filehub_dev_pwd
+      MYSQL_ROOT_PASSWORD: root_dev_pwd
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../runtime/mysql-data:/var/lib/mysql
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+
+  redis:
+    image: redis:7.4
+    container_name: filehub-redis
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - ../runtime/redis-data:/data
