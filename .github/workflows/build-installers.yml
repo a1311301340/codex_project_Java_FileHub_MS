@@ -8,6 +8,7 @@ on:
 jobs:
   package:
     strategy:
+      fail-fast: false
       matrix:
         os: [windows-latest, ubuntu-22.04]
     runs-on: ${{ matrix.os }}
@@ -31,7 +32,12 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y fakeroot dpkg rpm libgtk-3-0 libnss3 libxss1 libasound2t64
+          if apt-cache show libasound2t64 >/dev/null 2>&1; then
+            ALSA_PKG=libasound2t64
+          else
+            ALSA_PKG=libasound2
+          fi
+          sudo apt-get install -y fakeroot dpkg rpm libgtk-3-0 libnss3 libxss1 "$ALSA_PKG"
 
       - name: Package for Windows
         if: runner.os == 'Windows'
