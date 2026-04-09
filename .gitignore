@@ -1,0 +1,17 @@
+# Local caches and runtime
+.cache/
+dist/
+runtime/
+
+# Node
+**/node_modules/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+backend/target/
