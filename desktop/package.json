@@ -1,0 +1,53 @@
+{
+  "name": "filehub-desktop",
+  "version": "0.1.0",
+  "description": "FileHub desktop shell",
+  "author": "FileHub Team",
+  "main": "electron/main.cjs",
+  "private": true,
+  "scripts": {
+    "dev": "electron .",
+    "package:win": "electron-builder --win nsis --x64",
+    "package:linux": "electron-builder --linux AppImage deb --x64"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.filehub.desktop",
+    "productName": "FileHubMS",
+    "asar": true,
+    "directories": {
+      "output": "../dist/installers",
+      "buildResources": "build"
+    },
+    "files": [
+      "electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../dist/backend",
+        "to": "backend"
+      },
+      {
+        "from": "../dist/frontend",
+        "to": "frontend"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "signAndEditExecutable": false
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility"
+    }
+  }
+}
